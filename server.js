@@ -1,10 +1,14 @@
-var mongoose = require('mongoose'),
+var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server);
+    mongoose = require('mongoose'),
     princeton = require('./server/princeton'),
     conversation = require('./server/conversation'),
     chatter = require('./server/chatter');
 
 var port = process.env.PORT || 5000;
-var io = require('socket.io').listen(port);
+server.listen(port);
 
 var mongoUrl;
 io.configure('development', function() {
@@ -16,6 +20,11 @@ io.configure('production', function() {
 mongoose.connect(mongoUrl);
 
 var connectedUsers = {};
+
+app.get('/count', function(req, res) {
+  var count = Object.keys(connectedUsers).length;
+  res.send(count.toString());
+});
 
 io.configure('production', function() {
   io.set('log level', 1);
