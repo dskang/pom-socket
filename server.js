@@ -60,17 +60,20 @@ function getClientIP(handshakeData) {
 }
 
 function getValueFromCookie(name, cookie) {
-  var pairs = cookie.split('; ');
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i].split('=');
-    if (pair[0] === name) {
-      return pair[1];
+  if (cookie) {
+    var pairs = cookie.split('; ');
+    for (var i = 0; i < pairs.length; i++) {
+      var pair = pairs[i].split('=');
+      if (pair[0] === name) {
+        return pair[1];
+      }
     }
   }
 }
 
 io.sockets.on('connection', function(socket) {
-  if (socket.handshake.headers.cookie) {
+  var userID = getValueFromCookie('chatterID', socket.handshake.headers.cookie);
+  if (userID) {
     // Add user to list of connected users
     var ipAddr = getClientIP(socket.handshake);
     connectedUsers[ipAddr] = true;
@@ -78,11 +81,8 @@ io.sockets.on('connection', function(socket) {
       delete connectedUsers[ipAddr];
     });
 
-    var userID = getValueFromCookie('chatterID', socket.handshake.headers.cookie);
-    if (userID) {
-      chatter.connectChatter(socket, userID);
-    }
+    chatter.connectChatter(socket, userID);
   } else {
-    console.log('No cookie!: ' + socket.handshake.headers);
+    socket.disconnect();
   }
 });
