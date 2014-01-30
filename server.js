@@ -72,7 +72,7 @@ function getValueFromCookie(name, cookie) {
 }
 
 io.sockets.on('connection', function(socket) {
-  var userID = getValueFromCookie('chatterID', socket.handshake.headers.cookie);
+  var userID = getValueFromCookie('userID', socket.handshake.headers.cookie);
   if (userID) {
     // Add user to list of connected users
     var ipAddr = getClientIP(socket.handshake);
