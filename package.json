@@ -1,5 +1,5 @@
 {
-  "name": "tigersanonymous",
+  "name": "pom-socket",
   "author": "Origin Black",
   "version": "0.0.1",
   "engines": {
@@ -7,23 +7,8 @@
   },
   "dependencies": {
     "socket.io": "~0.9.16",
-    "express": "~3.1.0",
     "range_check": "~0.0.4",
     "mongoose": "~3.8.3",
-    "nodemailer": "~0.6.0",
-    "grunt-cli": "~0.1.13",
-    "grunt": "~0.4.2",
-    "grunt-rev": "~0.1.0",
-    "grunt-usemin": "~2.0.2",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.3.2",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-ngmin": "0.0.3",
-    "load-grunt-tasks": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3"
-  },
-  "scripts": {
-    "postinstall": "./node_modules/.bin/grunt"
+    "nodemailer": "~0.6.0"
   }
 }

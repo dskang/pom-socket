@@ -1,58 +1,23 @@
-var crypto = require('crypto'),
-    express = require('express'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
-    mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
     princeton = require('./server/princeton'),
     conversation = require('./server/conversation'),
-    chatter = require('./server/chatter.js');
+    chatter = require('./server/chatter');
 
-var port = process.env.PORT || 3000;
-server.listen(port);
+var port = process.env.PORT || 5000;
+var io = require('socket.io').listen(port);
 
 var mongoUrl;
-app.configure('development', function() {
+io.configure('development', function() {
   mongoUrl = 'mongodb://localhost/test';
 });
-app.configure('production', function() {
+io.configure('production', function() {
   mongoUrl = process.env.MONGOHQ_URL;
-  // Needed to get the client's IP on Heroku for Express
-  app.enable('trust proxy');
 });
 mongoose.connect(mongoUrl);
 
-app.use(express.cookieParser());
-
-
-app.get('/about', function(req, res) {
-  res.sendfile(__dirname + '/public/about.html');
-});
-
-app.get('/chat', function(req, res) {
-  if (!req.cookies.chatterID) {
-    crypto.pseudoRandomBytes(16, function(err, buff) {
-     res.cookie('chatterID', buff.toString('hex'), {
-       maxAge: 60*60*24*356*1000
-     });
-   });
-  }
-  res.sendfile(__dirname + '/public/chat.html');
-});
-
-app.use(express.static(__dirname + '/public'));
-
 var connectedUsers = {};
 
-app.get('/count', function(req, res) {
-  var count = Object.keys(connectedUsers).length;
-  res.send(count.toString());
-});
-
 io.configure('production', function() {
-  io.enable('browser client minification');
-  io.enable('browser client etag');
-  io.enable('browser client gzip');
   io.set('log level', 1);
   io.set('transports', ['websocket']);
 
