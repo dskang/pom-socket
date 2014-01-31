@@ -25,7 +25,7 @@ var timeString = function(seconds) {
   var secondText = (seconds > 1) ? 'seconds' : 'second';
 
   var text;
-  if (hours > 1) {
+  if (hours > 0) {
     text = hours + ' ' + hourText;
     if (minutes > 0) text += ' and ' + minutes + ' ' + minuteText;
   } else if (minutes > 0) {
