@@ -18,6 +18,12 @@ function User(socket, userID) {
     if (!user.conversation) return;
 
     if (!user.conversation.endTime) {
+      user.conversation.chatLog.push({
+        date: new Date(),
+        user: '',
+        text: '*** ' + user.pseudonym + ' disconnected ***'
+      });
+
       user.conversation.endTime = new Date();
       user.conversation.save();
       user.partner.socket.emit('finished');
