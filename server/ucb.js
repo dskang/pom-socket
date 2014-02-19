@@ -1,5 +1,6 @@
 var questions = require('./questions').list;
 
+// Used in lieu of positive and negative infinity
 var largePositiveNumber = 1000000000;
 var largeNegativeNumber = -1000000000;
 
@@ -28,11 +29,13 @@ exports.getQuestion = function(collection, user1, user2, callback) {
   });
 }
 
+// Helper function to get a random question
 var getRandomQuestion = function() {
   var randomIndex = Math.floor(Math.random() * questions.length);
   return questions[randomIndex];
 };
 
+// Helper function to invoke callback on the data item with the max UCB value
 var UCB1 = function(data, callback) {
   var finalData = {};
 

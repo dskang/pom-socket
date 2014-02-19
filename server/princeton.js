@@ -1,5 +1,6 @@
 var range_check = require('range_check');
 
+// Pre-defined Princeton IP address blocks
 var princetonIPs = [
   "128.112.0.0/16",
   "140.180.0.0/16",
@@ -9,8 +10,9 @@ var princetonIPs = [
   "66.180.180.0/22"
 ];
 
+// Check to ensure that the user's IP is a valid Princeton IP
 var isValidIP = function (userIP) {
-  if (userIP === "127.0.0.1" ||
+  if (userIP === "127.0.0.1" || // for debugging
       range_check.in_range(userIP, "192.168.0.0/16") ||
       range_check.in_range(userIP, "10.0.0.0/8")) {
     return true;
