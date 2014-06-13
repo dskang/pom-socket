@@ -30,23 +30,23 @@ io.configure('production', function() {
   io.set('log level', 1);
   io.set('transports', ['websocket']);
 
-  io.set('authorization', function(handshakeData, callback) {
-    // Check if Princeton IP
-    var ipAddr = getClientIP(handshakeData);
-    var isValidIP = princeton.isValidIP(ipAddr);
-    if (!isValidIP) {
-      callback('Sorry, this site is only for Princeton students!', false);
-      return;
-    }
+  // io.set('authorization', function(handshakeData, callback) {
+  //   // Check if Princeton IP
+  //   var ipAddr = getClientIP(handshakeData);
+  //   var isValidIP = princeton.isValidIP(ipAddr);
+  //   if (!isValidIP) {
+  //     callback('Sorry, this site is only for Princeton students!', false);
+  //     return;
+  //   }
 
-    // Check if already connected to server
-    if (ipAddr in connectedUsers) {
-      callback('Sorry, you can only chat with one person at a time!', false);
-      return;
-    }
+  //   // Check if already connected to server
+  //   if (ipAddr in connectedUsers) {
+  //     callback('Sorry, you can only chat with one person at a time!', false);
+  //     return;
+  //   }
 
-    callback(null, true);
-  });
+  //   callback(null, true);
+  // });
 });
 
 // Needed to get the client's IP on Heroku for socket.io
